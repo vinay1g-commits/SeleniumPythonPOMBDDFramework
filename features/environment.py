@@ -3,8 +3,6 @@ import allure
 from allure_commons.types import AttachmentType
 from selenium import webdriver
 from selenium.common.exceptions import TimeoutException
-from selenium.webdriver.firefox.service import Service as FirefoxService
-from selenium.webdriver.firefox.options import Options as FirefoxOptions
 from utilities import configreader
 
 
@@ -12,7 +10,8 @@ def before_scenario(context, scenario):
     browser_name = configreader.reading_data_ini("basic info", "browser")
 
     if browser_name == "chrome":
-        context.driver = webdriver.Chrome()
+        chrome_driver_path = "/home/vinay/Downloads/finalchromedriver/chromedriver-linux64 (11)/chromedriver-linux64"
+        context.driver = webdriver.Chrome(executable_path=chrome_driver_path)
 
     elif browser_name == "firefox":
         firefox_binary_path = "/usr/bin/firefox"  # Verify this path using `which firefox`
