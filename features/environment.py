@@ -8,16 +8,15 @@ from selenium.webdriver.chrome.options import Options as ChromeOptions
 from selenium.webdriver.chrome.service import Service as ChromeService
 from selenium.webdriver.firefox.options import Options as FirefoxOptions
 from selenium.webdriver.firefox.service import Service as FirefoxService
+from webdriver_manager.chrome import ChromeDriverManager
 
 
 def before_scenario(context, scenario):
     browser_name = configreader.reading_data_ini("basic info", "browser")
 
     if browser_name == "chrome":
-        chrome_driver_path = "/home/vinay/Downloads/finalchromedriver/chromedriver-linux64/chromedriver"
         options = ChromeOptions()
-        service = ChromeService(executable_path=chrome_driver_path)
-        context.driver = webdriver.Chrome(service=service, options=options)
+        context.driver = webdriver.Chrome(ChromeDriverManager().install(), options=options)
 
     elif browser_name == "firefox":
         firefox_binary_path = "/usr/bin/firefox"  # Verify this path using `which firefox`
