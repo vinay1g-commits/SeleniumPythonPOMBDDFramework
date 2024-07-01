@@ -4,6 +4,8 @@ from allure_commons.types import AttachmentType
 from selenium import webdriver
 from selenium.common.exceptions import TimeoutException
 from utilities import configreader
+from selenium.webdriver.chrome.options import Options as ChromeOptions
+from selenium.webdriver.chrome.service import Service as ChromeService
 
 
 def before_scenario(context, scenario):
@@ -11,7 +13,9 @@ def before_scenario(context, scenario):
 
     if browser_name == "chrome":
         chrome_driver_path = "/home/vinay/Downloads/finalchromedriver/chromedriver-linux64 (11)/chromedriver-linux64"
-        context.driver = webdriver.Chrome(executable_path=chrome_driver_path)
+        options = ChromeOptions()
+        service = ChromeService(executable_path=chrome_driver_path)
+        context.driver = webdriver.Chrome(service=service, options=options)
 
     elif browser_name == "firefox":
         firefox_binary_path = "/usr/bin/firefox"  # Verify this path using `which firefox`
