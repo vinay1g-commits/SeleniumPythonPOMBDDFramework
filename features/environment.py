@@ -15,7 +15,7 @@ def before_scenario(context, scenario):
 
     if browser_name == "chrome":
         options = ChromeOptions()
-        chromedriver_path = "/home/vinay/Downloads/finalchromedriver/chromedriver-linux64 (11)/chromedriver-linux64/chromedriver"
+        chromedriver_path = "/usr/local/bin/chromedriver"
         service = ChromeService(executable_path=chromedriver_path)
         context.driver = webdriver.Chrome(service=service, options=options)
 
