@@ -7,7 +7,7 @@ from webdriver_manager.chrome import ChromeDriverManager
 
 from utilities import configreader
 from selenium.webdriver.chrome.options import Options as ChromeOptions
-from selenium.webdriver.chrome.service import Service as ChromeService
+from selenium.webdriver.chrome.service import Service as ChromeService, Service
 from selenium.webdriver.firefox.options import Options as FirefoxOptions
 from selenium.webdriver.firefox.service import Service as FirefoxService
 
@@ -16,14 +16,13 @@ def before_scenario(context, scenario):
     browser_name = configreader.reading_data_ini("basic info", "browser")
 
     if browser_name == "chrome":
-        options = webdriver.ChromeOptions()
-        options.add_argument('--no-sandbox')
-        options.add_argument('--disable-dev-shm-usage')
-        #options.add_argument('--headless')  # if you're running in a headless environment
-        options.add_argument('--disable-gpu')
-        options.add_argument('--remote-debugging-port=9222')
+        chrome_options = webdriver.ChromeOptions()
+        #chrome_options.add_argument('--headless')
+        chrome_options.add_argument('--no-sandbox')
+        chrome_options.add_argument('--disable-dev-shm-usage')
 
-        driver = webdriver.Chrome(ChromeDriverManager().install(), options=options)
+        # Ensure you do not pass options multiple times
+        context.driver = webdriver.Chrome(service=Service(ChromeDriverManager().install()), options=chrome_options)
 
     elif browser_name == "firefox":
         firefox_binary_path = "/usr/bin/firefox"  # Verify this path using `which firefox`
